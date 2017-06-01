@@ -1,0 +1,44 @@
+---
+
+- name: install Drush dependencies
+  apt:
+    pkg: git
+    state: present
+
+- name: Clone Drush from GitHub
+  git:
+    repo: https://github.com/drush-ops/drush.git
+    dest: "{{ drush_install_path }}"
+    version: "{{ drush_version }}"
+    update: "{{ drush_keep_updated }}"
+
+- composer:
+    command: install
+    working_dir: "{{ drush_install_path }}"
+    prefer_source: yes
+
+#- name: Install Drush dependencies with Composer
+#  command: "{{ drush_composer_path }} install --prefer-source --no-interaction"
+#  args:
+#    chdir: "{{ drush_install_path }}"
+#    creates: "{{ drush_install_path }}/vendor/autoload.php"
+
+- name: Create drush symlink
+  file:
+    src: "{{ drush_install_path }}/drush"
+    dest: "{{ drush_path }}"
+    state: link
+
+- name: Run drush command to finish setup
+  command: "{{ drush_path }}"
+  register: drush_result
+  changed_when: "'Execute a drush command' not in drush_result.stdout"
+
+- name: create cronjob to update drush
+  cron:
+    name: PHP drush update
+    minute: 0
+    hour: 5
+    user: root
+    job: "composer update --no-plugins --no-scripts --working-dir={{ drush_install_path }}"
+    cron_file: php-drush-update
