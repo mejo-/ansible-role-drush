@@ -1,5 +1,14 @@
 ---
 
+- name: check if composer is available
+  stat:
+    path: "{{ apache2_php_composer_path|d('/usr/local/bin') }}/composer"
+  register: drupal_register_composer
+
+- fail:
+    msg: "Error: {{ apache2_php_composer_path|d('/usr/local/bin') }}/composer is required to install Drupal"
+  when: not drupal_register_composer.stat.executable|d()
+
 - name: install Drush dependencies
   apt:
     pkg: git
@@ -12,7 +21,8 @@
     version: "{{ drush_version }}"
     update: "{{ drush_keep_updated }}"
 
-- composer:
+- name: Install Drush with composer
+  composer:
     command: install
     working_dir: "{{ drush_install_path }}"
     prefer_source: yes
