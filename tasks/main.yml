@@ -50,5 +50,5 @@
     minute: 0
     hour: 5
     user: root
-    job: "composer update --no-plugins --no-scripts --working-dir={{ drush_install_path }}"
+    job: "{{ apache2_php_composer_path|d('/usr/local/bin') }}/composer update --quiet --no-interaction --working-dir={{ drush_install_path }} --no-plugins --no-scripts"
     cron_file: php-drush-update
