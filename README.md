@@ -1,6 +1,6 @@
 # Ansible role to install Drupal Drush on a webserver
 
-[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-drush-blue.svg)](https://galaxy.ansible.com/mejo-/drush/)
+[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-drush-blue.svg)](https://galaxy.ansible.com/mejo-/drush/) [![Build Status](https://travis-ci.org/mejo-/ansible-role-drush.svg?branch=master)](https://travis-ci.org/mejo-/ansible-role-drush)
 
 A very simple role to install Drupal Drush globally.
 
