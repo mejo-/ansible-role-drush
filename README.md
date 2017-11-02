@@ -1,5 +1,7 @@
 # Ansible role to install Drupal Drush on a webserver
 
+[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-drush-blue.svg)](https://galaxy.ansible.com/mejo-/drush/)
+
 A very simple role to install Drupal Drush globally.
 
 Additionally, it installs a daily cronjob to update Drush.
